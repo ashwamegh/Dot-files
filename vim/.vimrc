@@ -1,5 +1,5 @@
 """""""""""""""""""""""""""""""""""""
-" Allan MacGregor Vimrc configuration 
+"       Vimrc configuration 
 """""""""""""""""""""""""""""""""""""
 set nocompatible
 syntax on
