@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="style" mtime="1495741627" type="string">
+		<stringvalue>SF Mono Extra-Condensed 10</stringvalue>
+	</entry>
+	<entry name="palette_name" mtime="1495742854" type="string">
+		<stringvalue>Cobalt2</stringvalue>
+	</entry>
+	<entry name="palette" mtime="1495742854" type="string">
+		<stringvalue>#000000000000:#FFFF00000000:#3737DDDD2121:#FEFEE4E40909:#14146060D2D2:#FFFF00005D5D:#0000BBBBBBBB:#BBBBBBBBBBBB:#555555555555:#F4F40D0D1717:#3B3BCFCF1D1D:#ECECC8C80909:#55555555FFFF:#FFFF5555FFFF:#6A6AE3E3F9F9:#FFFFFFFFFFFF:#FFFFFFFFFFFF:#121226263737</stringvalue>
+	</entry>
+	<entry name="allow_bold" mtime="1495742854" type="bool" value="true"/>
+</gconf>
