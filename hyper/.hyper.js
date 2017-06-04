@@ -41,7 +41,7 @@ module.exports = {
     // set to `false` if you want to hide the minimize, maximize and close buttons
     // additionally, set to `'left'` if you want them on the left, like in Ubuntu
     // default: `true` on windows and Linux (ignored on macOS)
-    showWindowControls: '',
+    showWindowControls: 'left',
 
     // custom padding (css format, i.e.: `top right bottom left`)
     padding: '12px 14px',
@@ -104,10 +104,23 @@ module.exports = {
   //   `hyperpower`
   //   `@company/project`
   //   `project#1.0.1`
-  plugins: ['hyperterm-cobalt2-theme','hyperpower'],
+  plugins: [
+    'hyperterm-cobalt2-theme',
+    'hyperpower',
+    // 'hyperline',
+    'hypercwd',
+    'hyperterm-visor',
+     'hyperlinks',
+     'hyper-mac-controls',
+     'hyperterm-mactabs',
+     ],
 
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
   // to load it and avoid it being `npm install`ed
-  localPlugins: []
+  localPlugins: [],
+  visor: {
+      hotkey: 'Control+Shift+H',
+      position: 'top', // or left, right, bottom
+    },
 };
