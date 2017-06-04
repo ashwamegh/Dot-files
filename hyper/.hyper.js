@@ -112,7 +112,7 @@ module.exports = {
     'hyperterm-visor',
      'hyperlinks',
      'hyper-mac-controls',
-     'hyperterm-mactabs',
+     // 'hyperterm-mactabs',
      ],
 
   // in development, you can create a directory under
