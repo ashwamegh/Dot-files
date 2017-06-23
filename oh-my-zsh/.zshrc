@@ -8,7 +8,11 @@
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="cobalt2"
+if [ -n "$INSIDE_EMACS" ]; then
+    export ZSH_THEME="crcandy"
+else
+    export ZSH_THEME="cobalt2"
+fi
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -30,10 +34,10 @@ ZSH_THEME="cobalt2"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+  ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+  COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -104,3 +108,11 @@ export SDKMAN_DIR="/home/ashwamegh/.sdkman"
 export PATH="$PATH:$HOME/.rvm/bin"
 
 # Ended Bashrc Copy
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
+export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
+
+# Export Stuffs
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export TERM=xterm-256color
