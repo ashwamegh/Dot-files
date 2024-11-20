@@ -1,0 +1,168 @@
+# Zurg configuration version
+zurg: v1
+token: XXXXXXXXXXXXXXXXXXX # https://real-debrid.com/apitoken
+
+# each token in RD allows some amount of bandwidth daily
+# if you need to go over past this limit (e.g. plex extensive analysis)
+# you can buy a new RD account and specify the token here
+# download_tokens:
+# - ANOTHER_RD_API_TOKEN
+# - ANOTHER_RD_API_TOKEN_2
+
+# do not change this if you are running it inside a docker container
+# host: "[::]"
+# port: 9999
+
+#you can protect your zurg server with username+password auth
+# username: ashwamegh
+# password: Shashank@7200
+
+# You can proxy all zurg requests like this:
+# proxy: "http://[username:password@]host:port"
+# proxy: "https://[username:password@]host:port"
+# proxy: "socks5://[username:password@]host:port"
+
+# BEWARE! THERE CAN ONLY BE 1 INSTANCE OF ZURG THAT SHOULD REPAIR YOUR TORRENTS
+enable_repair: true
+# Action to take when encountering RAR files (extract, delete, or none)
+rar_action: extract
+# Add file extensions that you want to be considered playable (not moved to the unplayable directory)
+addl_playable_extensions:
+- mp3
+- flac
+- m4a
+- m4b
+- mp4
+- mkv
+- avi
+
+# How often should zurg look for broken torrents and repair them?
+repair_every_mins: 1440
+
+# How often should zurg remount all your downloads?
+# downloads_every_mins: 720
+
+# How often should zurg dump your zurgtorrent files to the dump folder?
+# dump_torrents_every_mins: 1440
+
+# RD API timeout setting
+# api_timeout_secs: 60
+
+# RD download timeout setting
+# download_timeout_secs: 10
+
+# api response failures until considered failed
+# retries_until_failed: 2
+
+# Every time zurg runs, it will
+cache_network_test_results: true
+
+# this is useful for ensuring Plex adds your new content immediately
+# uncomment the next line for triggering a partial scan
+on_library_update: sh plex_update.sh "$@"
+# on_library_update: '& C:\zurg\plex_udpdate.ps1 $args'
+#on_library_update: |
+#  for arg in "$@"
+#  do
+#      echo "detected update on: $arg"
+#  done
+
+# in order to use media_info_* filters, your torrents need to be analyzed first
+auto_analyze_new_torrents: true
+
+# true = send link to rclone and rclone will stream the file
+# false = zurg will stream the file
+# serve_from_rclone: false
+
+# force connect to real-debrid ipv6 addresses
+# useful if you are blocked
+# force_ipv6: false
+
+# How often should zurg check Real-Debrid API for file changes?
+check_for_changes_every_secs: 15
+
+# if true, it will strictly follow Real-Debrid API filename property
+# setting to true should make zurg more compatible with rdt-client
+# retain_rd_torrent_name: false
+
+# note: this is for cosmetic purposes only
+# if true, zurg won't drop file extensions from directories
+# retain_folder_name_extension: false
+
+# Load torrents from the dump folder when starting up
+# load_dumped_torrents: false
+
+# Load torrents from the trash folder when starting up
+# load_trashed_torrents: false
+
+# List of directory definitions and their filtering rules
+directories:
+  anime:
+    group_order: 10
+    group: media
+    filters:
+        - regex: /\b[a-fA-F0-9]{8}\b/
+        - any_file_inside_regex: /\b[a-fA-F0-9]{8}\b/
+
+  shows:
+    group: media
+    group_order: 20
+    filters:
+      - and:
+        - has_episodes: true  # intelligent detection of episode files inside a torrent
+        - not_regex: /.*(?:udemy|tutorial|Udemy|Tutorial).*/
+
+  audiobooks:
+    filters:
+      - and:
+        - regex: /.*(?:book|Book|BOOK|m4b|M4b|audible|Audible|AUDIBLE).*/
+        - any_file_inside_regex: /\.(mp3|m4b|flac)$/
+
+  music:
+    filters:
+      - and:
+        - regex: /.*(?:mp3|Mp3|flac|FLAC|Floyd|Flac|Kbps|kbps|KBPS|Essentials|essentials|Discography|discography).*/
+        - any_file_inside_regex: /\.(mp3|flac|m4a)$/
+
+  education:
+    filters:
+      - regex: /.*(?:udemy|tutorial|Udemy|Tutorial).*/
+
+  movies:
+    group: media  # because anime, shows and movies are in the same group,
+    group_order: 30 # and anime and shows has a lower group_order number than movies, all torrents that doesn't fall into the previous 2 will fall into movies
+    only_show_the_biggest_file: true # let's not show the other files besides the movie itself
+    filters:
+      - and:
+        - not_regex: /.*(?:udemy|tutorial|Udemy|Tutorial).*/
+        - regex: /.*/ # you cannot leave a directory without filters because it will not have any torrents in it
+
+  "4k english shows":
+    filters:
+      - and:
+        - media_info_with_audio_language: eng
+        - media_info_resolution: 4k
+        - has_episodes: true
+
+  "4k foreign shows":
+    filters:
+      - and:
+        - media_info_without_audio_language: eng
+        - media_info_with_subtitle_language: eng
+        - media_info_resolution: 4k
+        - has_episodes: true
+
+  "4k english movies":
+    filters:
+      - and:
+        - media_info_with_audio_language: eng
+        - media_info_resolution: 4k
+        - media_info_duration_gte: 3600 # 60 mins
+
+  "4k foreign movies":
+    filters:
+      - and:
+        - media_info_without_audio_language: eng
+        - media_info_with_subtitle_language: eng
+        - media_info_resolution: 4k
+        - media_info_duration_gte: 3600 # 60 mins

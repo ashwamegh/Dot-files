@@ -1,0 +1,8 @@
+collections:
+  Mubi:
+    mdblist_list:
+      url: https://mdblist.com/lists/haxwitcher/mubi-list
+      sort_by: imdbrating.desc
+    collection_order: custom
+    sync_mode: sync
+    url_poster: https://m.media-amazon.com/images/I/41sV908ejeL.png

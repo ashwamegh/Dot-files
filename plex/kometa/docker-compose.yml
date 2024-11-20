@@ -1,0 +1,17 @@
+services:
+  kometa:
+    image: kometateam/kometa:latest
+    container_name: kometa
+    volumes:
+      - ./config:/config
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      UMASK: "022"
+      TZ: "Asia/Kolkata"
+      KOMETA_RUN: "true"
+      KOMETA_CONFIG: "/config/config.yml"
+      KOMETA_PLEXURL: "${kometa_plexurl}"
+      KOMETA_PLEXTOKEN: "${kometa_plextoken}"
+      KOMETA_TMDBKEY: "${kometa_tmdbkey}"
+    restart: unless-stopped

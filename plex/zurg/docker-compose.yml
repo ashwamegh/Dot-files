@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  zurg:
+    image: ghcr.io/debridmediamanager/zurg:latest
+    # build: .
+    restart: unless-stopped
+    ports:
+      - 9999:9999
+    volumes:
+      - ./config.yml:/app/config.yml
+      - ./data:/app/data
+      - ./dump:/app/dump
+      - ./plex_update.sh:/app/plex_update.sh
+
+  rclone:
+    image: rclone/rclone:latest
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Kolkata
+      PUID: 1000
+      PGID: 1000
+    volumes:
+      - /mnt/zurg:/data:rshared
+      - ./rclone.conf:/config/rclone/rclone.conf
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    devices:
+      - /dev/fuse
+    command: "mount zurg: /data --allow-non-empty --allow-other --vfs-read-chunk-size 1M"

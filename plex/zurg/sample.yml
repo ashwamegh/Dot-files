@@ -1,0 +1,81 @@
+zurg: v1
+
+token:
+# host: [::]
+# port: 9999
+# proxy: http://user:pass@your-http-proxy.com:8080
+# proxy: https://user:pass@your-https-proxy.com:8080
+# proxy: socks5://user:pass@your-socks5-proxy.com
+# proxy:
+
+# secure your zurg deployment
+# username:
+# password:
+
+# check_for_changes_every_secs: 15
+# repair_every_mins: 60 # 1 hr
+# downloads_every_mins: 720 # 12 hrs
+# dump_torrents_every_mins: 1440 # 24 hrs
+enable_repair: true
+
+# force_ipv6: false
+# serve_from_rclone: false
+
+# api_timeout_secs: 60
+# download_timeout_secs: 10
+# rate_limit_sleep_secs: 4
+# retries_until_failed: 2
+
+# possible values are extract, delete, none
+# extract requires enable_repair: true
+rar_action: extract
+
+# retain_folder_name_extension: false
+# retain_rd_torrent_name: false
+
+# add file extensions here that you don't want to be
+# moved to the unplayable directory
+addl_playable_extensions:
+- mp3
+- flac
+
+# for windows
+# on_library_update: '& powershell -ExecutionPolicy Bypass -File .\plex_update.ps1 --% "$args"'
+# for linux/mac
+# on_library_update: sh plex_update.sh "$@"
+
+directories:
+
+  audiobooks:
+    group_order: 5
+    group: media
+    filters:
+      - and:
+        - is_music: true
+        - media_info_duration_gte: 600
+
+  music:
+    group_order: 10
+    group: media
+    filters:
+      - is_music: true
+
+  anime:
+    group_order: 15
+    group: media
+    filters:
+      - regex: /\b[a-fA-F0-9]{8}\b/
+      - any_file_inside_regex: /\b[a-fA-F0-9]{8}\b/
+
+  shows:
+    group_order: 20
+    group: media
+    filters:
+      - has_episodes: true
+
+  movies:
+    group_order: 25
+    group: media
+    only_show_the_biggest_file: true
+    filters:
+      - regex: /.*/
